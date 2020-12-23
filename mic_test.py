@@ -7,7 +7,7 @@ CHUNK = 1024
 FORMAT = pyaudio.paInt16
 CHANNELS = 2
 RATE = 44100
-RECORD_SECONDS = 1
+RECORD_SECONDS = 3
 WAVE_OUTPUT_FILENAME = "output.wav"
 
 p = pyaudio.PyAudio()
@@ -16,7 +16,7 @@ stream = p.open(format=FORMAT,
                 channels=CHANNELS,
                 rate=RATE,
                 input=True,
-                input_device_index = 2,
+                input_device_index = 0,
                 frames_per_buffer=CHUNK)
 
 
@@ -65,4 +65,10 @@ plt.clf()
 plt.plot(conv)
 plt.show()
 
+wf = wave.open("one_chanel.wav", 'wb')
+wf.setnchannels(1)
+wf.setsampwidth(p.get_sample_size(FORMAT))
+wf.setframerate(RATE)
+wf.writeframes(channel[1])
+wf.close()
 
